@@ -4,12 +4,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import qna.domain.DeleteHistory;
-import qna.domain.DeleteHistoryRepository;
+import qna.repository.DeleteHistoryRepository;
 
 import java.util.List;
 
 @Service
 public class DeleteHistoryService {
+
     private DeleteHistoryRepository deleteHistoryRepository;
 
     public DeleteHistoryService(DeleteHistoryRepository deleteHistoryRepository) {

@@ -3,14 +3,22 @@ package qna.domain;
 import qna.NotFoundException;
 import qna.UnAuthorizedException;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.util.Objects;
 
-public class Answer {
+@Entity
+public class Answer extends BaseEntity {
+    @Id @GeneratedValue
     private Long id;
     private Long writerId;
     private Long questionId;
     private String contents;
     private boolean deleted = false;
+
+    protected Answer() {
+    }
 
     public Answer(User writer, Question question, String contents) {
         this(null, writer, question, contents);

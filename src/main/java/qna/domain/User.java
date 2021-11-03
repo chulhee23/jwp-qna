@@ -1,20 +1,27 @@
 package qna.domain;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import qna.UnAuthorizedException;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.util.Objects;
 
-public class User {
+@Entity
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class User extends BaseEntity {
     public static final GuestUser GUEST_USER = new GuestUser();
 
+    @Id @GeneratedValue
     private Long id;
     private String userId;
     private String password;
     private String name;
     private String email;
 
-    private User() {
-    }
+
 
     public User(String userId, String password, String name, String email) {
         this(null, userId, password, name, email);
