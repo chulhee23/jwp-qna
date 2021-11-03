@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import qna.UnAuthorizedException;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -16,24 +17,28 @@ public class User extends BaseEntity {
 
     @Id @GeneratedValue
     private Long id;
+
+    @Column(length = 20, nullable = false)
     private String userId;
+
+    @Column(length = 20, nullable = false)
     private String password;
+
+    @Column(length = 20, nullable = false)
     private String name;
+
+    @Column(length = 20)
     private String email;
 
 
 
     public User(String userId, String password, String name, String email) {
-        this(null, userId, password, name, email);
-    }
-
-    public User(Long id, String userId, String password, String name, String email) {
-        this.id = id;
         this.userId = userId;
         this.password = password;
         this.name = name;
         this.email = email;
     }
+
 
     public void update(User loginUser, User target) {
         if (!matchUserId(loginUser.userId)) {
