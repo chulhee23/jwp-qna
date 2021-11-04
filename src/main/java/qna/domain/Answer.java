@@ -1,19 +1,24 @@
 package qna.domain;
 
+import lombok.Getter;
 import qna.NotFoundException;
 import qna.UnAuthorizedException;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
+@Getter
 public class Answer extends BaseEntity {
     @Id @GeneratedValue
     private Long id;
-    private Long writerId;
-    private Long questionId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User writer;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Question question;
+
     private String contents;
     private boolean deleted = false;
 
@@ -21,12 +26,6 @@ public class Answer extends BaseEntity {
     }
 
     public Answer(User writer, Question question, String contents) {
-        this(null, writer, question, contents);
-    }
-
-    public Answer(Long id, User writer, Question question, String contents) {
-        this.id = id;
-
         if (Objects.isNull(writer)) {
             throw new UnAuthorizedException();
         }
@@ -35,45 +34,29 @@ public class Answer extends BaseEntity {
             throw new NotFoundException();
         }
 
-        this.writerId = writer.getId();
-        this.questionId = question.getId();
+        this.writer = writer;
+        this.question = question;
         this.contents = contents;
     }
 
     public boolean isOwner(User writer) {
-        return this.writerId.equals(writer.getId());
+        return this.writer.equals(writer);
     }
 
     public void toQuestion(Question question) {
-        this.questionId = question.getId();
-    }
-
-    public Long getId() {
-        return id;
+        this.question = question;
     }
 
     public void setId(Long id) {
         this.id = id;
     }
 
-    public Long getWriterId() {
-        return writerId;
+    public void setWriter(User user) {
+        this.writer = user;
     }
 
-    public void setWriterId(Long writerId) {
-        this.writerId = writerId;
-    }
-
-    public Long getQuestionId() {
-        return questionId;
-    }
-
-    public void setQuestionId(Long questionId) {
-        this.questionId = questionId;
-    }
-
-    public String getContents() {
-        return contents;
+    public void setQuestion(Question question) {
+        this.question = question;
     }
 
     public void setContents(String contents) {
@@ -92,8 +75,8 @@ public class Answer extends BaseEntity {
     public String toString() {
         return "Answer{" +
                 "id=" + id +
-                ", writerId=" + writerId +
-                ", questionId=" + questionId +
+                ", writerId=" + writer.getId() +
+                ", questionId=" + question.getId() +
                 ", contents='" + contents + '\'' +
                 ", deleted=" + deleted +
                 '}';

@@ -25,9 +25,9 @@ public class QuestionTest {
         Question question = new Question("title", "content");
 
         // when
-        question.setWriterId(user.getId());
+        question.setWriter(user);
 
         // then
-        assertThat(question.getWriterId()).isEqualTo(user.getId());
+        assertThat(question.getWriter()).isEqualTo(user);
     }
 }

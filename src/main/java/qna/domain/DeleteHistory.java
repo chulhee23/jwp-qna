@@ -1,5 +1,7 @@
 package qna.domain;
 
+import lombok.Getter;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -7,19 +9,18 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
+@Getter
 public class DeleteHistory extends BaseEntity {
     @Id @GeneratedValue
     private Long id;
     private ContentType contentType;
     private Long contentId;
     private Long deletedById;
-    private LocalDateTime createDate = LocalDateTime.now();
 
-    public DeleteHistory(ContentType contentType, Long contentId, Long deletedById, LocalDateTime createDate) {
+    public DeleteHistory(ContentType contentType, Long contentId, Long deletedById) {
         this.contentType = contentType;
         this.contentId = contentId;
         this.deletedById = deletedById;
-        this.createDate = createDate;
     }
 
     protected DeleteHistory() {
@@ -48,7 +49,7 @@ public class DeleteHistory extends BaseEntity {
                 ", contentType=" + contentType +
                 ", contentId=" + contentId +
                 ", deletedById=" + deletedById +
-                ", createDate=" + createDate +
+                ", createDate=" + getCreateDate() +
                 '}';
     }
 }
