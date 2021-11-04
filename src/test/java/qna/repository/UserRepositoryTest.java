@@ -1,12 +1,10 @@
 package qna.repository;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import qna.domain.User;
 import qna.domain.UserTest;
 
@@ -36,7 +34,9 @@ class UserRepositoryTest {
     @Test
     @DisplayName("user save 테스트")
     void save() {
-        assertThat(saved).isEqualTo(expected);
+        // assertThat(saved).isEqualTo(expected);
+        //ID 값이 다름.
+        isEqualTo(expected, saved);
     }
 
     @Test
